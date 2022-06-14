@@ -40,8 +40,12 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage });
 
 var imgModel = require("./model");
+
 console.log(imgModel);
 
+var myCss = {
+    style: fs.readFileSync('./style.css', 'utf8')
+};
 // upload
 app.get("/upload", (req, res) => {
     console.log("****** Upload page ******");
@@ -52,7 +56,7 @@ app.get("/upload", (req, res) => {
         } else {
             // https://medium.com/web-design-zone/ejs樣板引擎的使用方式-40873ea2dfae
             console.log("Rendering uploadPage");
-            res.render("uploadPage", { items: items });
+            res.render("uploadPage", { items: items, myCss: myCss });
         }
     });
 });

@@ -1,65 +1,117 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('header'); -%>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Image Uploading</title>
-</head>
 
-<body>
-    <h1>To Upload Image on mongoDB</h1>
-    <hr />
-    <div>
-        <form action="/upload" method="POST" enctype="multipart/form-data">
-            <div>
-                <label for="name">Image Title</label>
-                <input type="text" id="name" name="name" placeholder="Name" value="" required />
-            </div>
-            <div>
-                <label for="desc">Image Description</label>
-                <textarea id="desc" name="desc" value="" rows="2" placeholder="Description" required>
-          </textarea>
-            </div>
-            <div>
-                <label for="tag">Tag</label>
-                <input type="text" id="tag" name="tag" placeholder="tags" value="" required />
-            </div>
-            <div>
-                <label for="image">Upload Image</label>
-                <input type="file" id="image" name="image" value="" required />
-            </div>
-            <div>
-                <button type="submit">Submit</button>
-            </div>
-        </form>
-    </div>
+    <body>
 
-    <hr />
+        <nav class="navbar navbar-inverse" style="background-color: rgb(43, 181, 40); ">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <h2>WallPaper Uploader</h2>
 
-    <h1>Uploaded Images</h1>
-    <div>
-        <% items.forEach(function(image) { %>
-            <div>
-                <div>
-                    <img src="data:image/<%=image.img.contentType%>;base64,
-					<%=image.img.data.toString('base64')%>" />
-                    <div>
-                        <h5>
-                            <%= image.name %>
-                        </h5>
+                </div>
 
-                        <p>
-                            <%= image.desc %>
-                        </p>
-                        <p>
-                            <%= image.tag %>
-                        </p>
+            </div>
+        </nav>
+        <section style="background-color: #eee;">
+            <div class="container my-5 py-5 px-3">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-1 col-lg-6 col-xl-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <form action="/upload" method="POST" enctype="multipart/form-data">
+
+
+                                    <div class="user-input-wrp">
+                                        <br>
+                                        <input type="text" id="name " name="name " class=" inputText" required/>
+                                        <span class=" floating-label">Image Title</span>
+                                    </div>
+
+                                    <br>
+
+                                    <div class="user-input-wrp">
+                                        <br>
+                                        <input type="text" id="tag " name="tag " class=" inputText" required/>
+                                        <span class=" floating-label">Tag</span>
+                                    </div>
+                                    <br>
+                                    <div class="form-outline mb-4 ">
+                                        <textarea class="form-control " id="form4Example3 " id="desc " name="desc " value=" " rows="2 " placeholder="Image Description " rows="4 "></textarea>
+                                    </div>
+                                    <div class="input-group">
+
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="image" id="image" required aria-describedby="image">
+                                            <label class="custom-file-label " for="image">Upload Image</label>
+                                        </div>
+                                    </div>
+
+                                    <br>
+                                    <div class="float-end mt-2 pt-1 ">
+                                        <button type="submit " class="btn btn-primary btn-sm ">
+                                            Submit
+                                        </button>
+                                        <button type="button " class="btn btn-outline-primary btn-sm ">
+                                        Cancel
+                                        </button>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                            <div class="card-footer py-3 border-0 " style="background-color: #f8f9fa; ">
+
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <% }) %>
-    </div>
-</body>
+        </section>
+        <div class="container ">
+            <div class=" ">
+                <div class=" col-md-offset-4 ">
 
-</html>
+                    <div class="fh5co-form animate-box form " data-animate-effect="fadeIn ">
+
+
+
+                        <div>
+
+                        </div>
+
+                        <hr />
+
+                        <h1>Uploaded Images</h1>
+                        <div>
+                            <% items.forEach(function(image) { %>
+                                <div>
+                                    <div>
+                                        <img src="data:image/<%=image.img.contentType%>;base64,
+                                            <%=image.img.data.toString('base64')%>" />
+                                        <div>
+                                            <h5>
+                                                <%= image.name %>
+                                            </h5>
+
+                                            <p>
+                                                <%= image.desc %>
+                                            </p>
+                                            <p>
+                                                <%= image.tag %>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% }) %>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </body>
+
+    </html>
