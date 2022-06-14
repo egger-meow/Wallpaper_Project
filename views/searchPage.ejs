@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Uploading</title>
+</head>
+
+<body>
+    <h1>Search your favorite wallpaper</h1>
+    <form action="/search" method="POST" enctype="multipart/form-data">
+        <!-- <label for="search_query">search by tag</label> -->
+        <input type="text" id="search_query" name="search_query" placeholder="Search wallpapers..." value="" required />
+
+        <button type="submit">Search</button>
+    </form>
+</body>
+
+</html>
