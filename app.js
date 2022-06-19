@@ -24,6 +24,7 @@ mongoose.connect(
 // https://www.tutorialspoint.com/expressjs/expressjs_middleware.htm
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(express.static(__dirname + '/public'));
 
 // Set EJS as templating engine
 app.set("view engine", "ejs");
@@ -43,9 +44,6 @@ var imgModel = require("./model");
 
 console.log(imgModel);
 
-var myCss = {
-    style: fs.readFileSync('./style.css', 'utf8')
-};
 // upload
 app.get("/upload", (req, res) => {
     console.log("****** Upload page ******");
@@ -56,12 +54,13 @@ app.get("/upload", (req, res) => {
         } else {
             // https://medium.com/web-design-zone/ejs樣板引擎的使用方式-40873ea2dfae
             console.log("Rendering uploadPage");
-            res.render("uploadPage", { items: items, myCss: myCss });
+            res.render("uploadPage", { items: items });
         }
     });
 });
 
 app.post("/upload", upload.single("image"), (req, res, next) => {
+    console.log("Successfully uploading your image!!");
     var obj = {
         name: req.body.name,
         desc: req.body.desc,
@@ -85,6 +84,7 @@ app.post("/upload", upload.single("image"), (req, res, next) => {
 
 app.get("/upload_success", upload.single("image"), (req, res, next) => {
     res.send("Successfully uploading your image!!");
+    console.log("Successfully uploading your image!!");
 });
 
 // Search page

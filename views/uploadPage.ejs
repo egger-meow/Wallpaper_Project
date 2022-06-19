@@ -1,94 +1,95 @@
-<%- include('header'); -%>
+<%- include('partials/header'); -%>
 
 
     <body>
-
-        <nav class="navbar navbar-inverse" style="background-color: rgb(43, 181, 40); ">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
-                <div class="navbar-header">
-                    <h2>WallPaper Uploader</h2>
 
+                <a class="navbar-brand" href="#">
+                    <img src=" https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/logo_white.png " width="30 " height="30 " alt="logo "> Bs-Wallpaper
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+                    <span class="navbar-toggler-icon "></span>
+                </button>
+                <div class="collapse navbar-collapse " id="mynavbar">
+                    <ul class="navbar-nav me-auto ">
+                        <li class="nav-item ">
+                            <a class="nav-link " href="javascript:void(0) " data-bs-toggle="modal" data-bs-target="#Modal">Upload Wallpaper</a>
+                        </li>
+
+                    </ul>
+                    <form class="d-flex" action='/search' method="POST" enctype="multipart/form-data">
+                        <input class="form-control mr-2 " type="search" placeholder="Search wallpapers... " aria-label="Search" style="margin-right:8px;">
+                        <button class="btn btn-success " type="submit">search<i class="fa fa-search" aria-hidden="true"></i></button>
+                    </form>
                 </div>
-
             </div>
         </nav>
-        <section style="background-color: #eee;">
-            <div class="container my-5 py-5 px-3">
-                <div class="row d-flex justify-content-center">
-                    <div class="col-md-1 col-lg-6 col-xl-8">
-                        <div class="card">
-                            <div class="card-body">
-                                <form action="/upload" method="POST" enctype="multipart/form-data">
 
 
-                                    <div class="user-input-wrp">
-                                        <br>
-                                        <input type="text" id="name " name="name " class=" inputText" required/>
-                                        <span class=" floating-label">Image Title</span>
-                                    </div>
 
-                                    <br>
-
-                                    <div class="user-input-wrp">
-                                        <br>
-                                        <input type="text" id="tag " name="tag " class=" inputText" required/>
-                                        <span class=" floating-label">Tag</span>
-                                    </div>
-                                    <br>
-                                    <div class="form-outline mb-4 ">
-                                        <textarea class="form-control " id="form4Example3 " id="desc " name="desc " value=" " rows="2 " placeholder="Image Description " rows="4 "></textarea>
-                                    </div>
-                                    <div class="input-group">
-
-                                        <div class="custom-file">
-                                            <input type="file" class="custom-file-input" name="image" id="image" required aria-describedby="image">
-                                            <label class="custom-file-label " for="image">Upload Image</label>
-                                        </div>
-                                    </div>
-
-                                    <br>
-                                    <div class="float-end mt-2 pt-1 ">
-                                        <button type="submit " class="btn btn-primary btn-sm ">
-                                            Submit
-                                        </button>
-                                        <button type="button " class="btn btn-outline-primary btn-sm ">
-                                        Cancel
-                                        </button>
-                                    </div>
-                                </form>
+        <!-- Modal -->
+        <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Upload Wallpaper</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/upload " method="POST" id="uploadForm" enctype="multipart/form-data">
 
 
+                            <div class="form-floating  mt-3 mb-3">
+
+                                <input type="text" id="name" name="name" placeholder="Enter password" class="form-control" required>
+                                <label for="name">Image Title</label>
                             </div>
-                            <div class="card-footer py-3 border-0 " style="background-color: #f8f9fa; ">
 
 
+                            <div class="form-floating  mt-3 mb-3">
+
+                                <input type="text" id="tag" name="tag" placeholder="Enter password" class="form-control" required>
+                                <label for="tag">Tag</label>
                             </div>
-                        </div>
+                            <br>
+                            <div class="form-outline mb-4">
+                                <textarea class="form-control" id="form4Example3" id="desc" name="desc" value="" rows="2" placeholder="Image Description" rows="4 "></textarea>
+                            </div>
+
+
+                            <div class="input-group ">
+                                <div class="custom-file ">
+                                    <input id="image" type="file" name="image" class="file-loading" required>
+                                </div>
+                            </div>
+                            <br>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="sub">upload</button>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+        <script type="text/javascript">
+            $("#sub").click(function() {
+                $("uploadForm").submit()
+            })
+        </script>
         <div class="container ">
             <div class=" ">
                 <div class=" col-md-offset-4 ">
 
                     <div class="fh5co-form animate-box form " data-animate-effect="fadeIn ">
 
-
-
-                        <div>
-
-                        </div>
-
-                        <hr />
-
-                        <h1>Uploaded Images</h1>
+                        <h1>Wallpapers</h1>
                         <div>
                             <% items.forEach(function(image) { %>
                                 <div>
                                     <div>
-                                        <img src="data:image/<%=image.img.contentType%>;base64,
-                                            <%=image.img.data.toString('base64')%>" />
+                                        <img src="data:image/<%=image.img.contentType%>;base64, <%=image.img.data.toString('base64')%>" />
                                         <div>
                                             <h5>
                                                 <%= image.name %>
@@ -109,7 +110,6 @@
 
                 </div>
             </div>
-
         </div>
 
     </body>
