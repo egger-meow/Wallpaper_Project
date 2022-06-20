@@ -4,6 +4,7 @@ var imageSchema = new mongoose.Schema({
     name: String,
     desc: String,
     tag: String,
+    likes: Number,
     img: {
         data: Buffer,
         contentType: String,

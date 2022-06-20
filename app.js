@@ -44,6 +44,7 @@ var imgModel = require("./model");
 
 console.log(imgModel);
 
+
 // upload
 app.get("/upload", (req, res) => {
     console.log("****** Upload page ******");
@@ -65,6 +66,7 @@ app.post("/upload", upload.single("image"), (req, res, next) => {
         name: req.body.name,
         desc: req.body.desc,
         tag: req.body.tag,
+        likes: 0,
         img: {
             data: fs.readFileSync(
                 path.join(__dirname + "/uploads/" + req.file.filename)
@@ -77,15 +79,12 @@ app.post("/upload", upload.single("image"), (req, res, next) => {
             console.log(err);
         } else {
             // item.save();
-            res.redirect("/upload_success");
+            res.redirect("/upload");
         }
     });
+
 });
 
-app.get("/upload_success", upload.single("image"), (req, res, next) => {
-    res.send("Successfully uploading your image!!");
-    console.log("Successfully uploading your image!!");
-});
 
 // Search page
 app.get("/search", (req, res) => {
@@ -113,8 +112,11 @@ app.get("/result", (req, res) => {
     console.log("****** Result page ******");
     console.log("search_query: " + req.query.search_query);
     // res.send("search_query: " + req.query.search_query);
-
-    imgModel.find({ tag: { $regex: req.query.search_query, $options: "i" } },
+    let find = { tag: { $regex: req.query.search_query, $options: "i" } }
+    if (req.query.search_query == '') {
+        find = {}
+    }
+    imgModel.find(find,
         (err, items) => {
             if (err) {
                 console.log(err);
@@ -122,6 +124,36 @@ app.get("/result", (req, res) => {
             } else {
                 console.log("Rendering resultPage");
                 res.render("resultPage", { items: items });
+            }
+        }
+    );
+});
+
+app.post("/update_likes", (req, res, next) => {
+    console.log(req.body);
+
+    imgModel.findByIdAndUpdate(req.body.id, { "likes": req.body.likes }, (err, item) => {
+        if (err) {
+            console.log(err);
+        } else {
+
+        }
+    });
+});
+
+// get likes of a image
+app.get("/get_likes", (req, res) => {
+    console.log("****** get Likes ******");
+    console.log("query id: " + req.query.id);
+
+    imgModel.findById(req.query.id,
+        (err, item) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send("An error occurred", err);
+            } else {
+                console.log("query likes: " + item.likes);
+                res.json({ 'likes': item.likes });
             }
         }
     );

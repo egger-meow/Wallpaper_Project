@@ -1,12 +1,11 @@
 <%- include('partials/header'); -%>
 
-
     <body>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <div class="container-fluid">
 
-                <a class="navbar-brand" href="#">
-                    <img src=" https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/logo_white.png " width="30 " height="30 " alt="logo "> Bs-Wallpaper
+                <a class="navbar-brand" href="#" id=>
+                    <img src=" https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/logo_white.png " width="30 " height="30 " alt="logo "> Pixels4K
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
@@ -20,14 +19,12 @@
 
                     </ul>
                     <form class="d-flex" action='/search' method="POST" enctype="multipart/form-data">
-                        <input class="form-control mr-2 " type="search" placeholder="Search wallpapers... " aria-label="Search" style="margin-right:8px;">
+                        <input class="form-control mr-2 " type="search" id="search_query" name="search_query" placeholder="Search wallpapers... " aria-label="Search" style="margin-right:8px;">
                         <button class="btn btn-success " type="submit">search<i class="fa fa-search" aria-hidden="true"></i></button>
                     </form>
                 </div>
             </div>
         </nav>
-
-
 
         <!-- Modal -->
         <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -73,38 +70,86 @@
                 </div>
             </div>
         </div>
+
         <script type="text/javascript">
             $("#sub").click(function() {
-                $("uploadForm").submit()
+                $("#uploadForm").submit()
             })
+        </script>
+
+        <style>
+            * {
+                box-sizing: border-box;
+            }
+            
+            .column {
+                float: center;
+                width: 31%;
+                padding: 5px;
+                margin: 7px;
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                border: 2px solid #bdafaf;
+                border-radius: 3px;
+            }
+            /* Clearfix (clear floats) */
+            
+            .column::hover {
+                border: 2px solid #070404;
+            }
+            
+            .row::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+        </style>
+        <script>
+            var curImage = new Image()
         </script>
         <div class="container ">
             <div class=" ">
                 <div class=" col-md-offset-4 ">
 
                     <div class="fh5co-form animate-box form " data-animate-effect="fadeIn ">
-
-                        <h1>Wallpapers</h1>
+                        <hr>
+                        <h1>All Wallpapers</h1>
                         <div>
-                            <% items.forEach(function(image) { %>
-                                <div>
-                                    <div>
-                                        <img src="data:image/<%=image.img.contentType%>;base64, <%=image.img.data.toString('base64')%>" />
-                                        <div>
-                                            <h5>
-                                                <%= image.name %>
-                                            </h5>
+                            <div class="row">
+                                <% items.forEach(function(image) { %>
 
+                                    <div class="column " data-animate-effect="fadeIn " style="background-color:rgba(255, 182, 193, 0.178);">
+                                        <h4 style="background-color:greenyellow;">
+                                            <%= image.name %>
+                                        </h4>
+                                        <img width="50%" height="50%" src="data:image/<%=image.img.contentType%>;base64, <%=image.img.data.toString('base64')%>" />
+                                        <div>
+                                            <hr>
                                             <p>
-                                                <%= image.desc %>
+                                                Description:
+                                                <textarea readonly class="form-control" id="form4Example3" id="desc" name="desc" value="hfght" rows="2" rows="4 "><%= image.desc %></textarea>
                                             </p>
                                             <p>
-                                                <%= image.tag %>
+                                                Tag: <button class="btn btn-success " type="submit"><%= image.tag %></button>
                                             </p>
+                                            <i class="bi bi-share"></i>
+                                            <article class="col-xs-12 col-sm-6 col-md-3">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-footer">
+                                                        <h4>Likes:</h4>
+                                                        <span class="pull-right">
+                                                            <i id="<%= image._id %>" class="glyphicon glyphicon-thumbs-up"></i>
+                                                            <div id="<%= image._id %>-count"> <%= image.likes %> </div>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </article>
                                         </div>
                                     </div>
-                                </div>
-                                <% }) %>
+
+                                    <% }) %>
+                            </div>
                         </div>
                     </div>
 
@@ -113,5 +158,12 @@
         </div>
 
     </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- like button -->
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="/js/likes_button.js"></script>
 
     </html>
